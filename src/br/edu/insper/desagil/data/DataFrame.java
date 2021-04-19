@@ -15,7 +15,15 @@ public class DataFrame {
 	public void addColumn(String label, List<Double> values) {
 		this.columns.put(label, new ArrayList<>(values));
 	}
-
+	
+	private double sumValues (List<Double> values) {
+		double s = 0;
+		for (double value: values) {
+			s += value;
+		}
+		return s;
+	}
+	
 	public double min(String label) {
 		if (!this.columns.containsKey(label)) {
 			throw new DataFrameException("Column " + label + " is invalid!");
@@ -60,12 +68,10 @@ public class DataFrame {
 		if (values.size() == 0) {
 			throw new DataFrameException("Column " + label + " is empty!");
 		}
+		
+		return sumValues(values);
 
-		double s = 0;
-		for (double value: values) {
-			s += value;
-		}
-		return s;
+	
 	}
 
 	public double avg(String label) {
@@ -76,12 +82,8 @@ public class DataFrame {
 		if (values.size() == 0) {
 			throw new DataFrameException("Column " + label + " is empty!");
 		}
-
-		double s = 0;
-		for (double value: values) {
-			s += value;
-		}
-		return s / values.size();
+		
+		return sumValues(values) / values.size();
 	}
 
 	public double var(String label) {
@@ -95,11 +97,7 @@ public class DataFrame {
 
 		double s;
 
-		s = 0;
-		for (double value: values) {
-			s += value;
-		}
-		double m = s / values.size();
+		double m = sumValues(values) / values.size();
 
 		s = 0;
 		for (double value: values) {
@@ -119,11 +117,7 @@ public class DataFrame {
 
 		double s, m;
 
-		s = 0;
-		for (double value: values) {
-			s += value;
-		}
-		m = s / values.size();
+		m = sumValues(values)/ values.size();
 
 		s = 0;
 		for (double value: values) {
